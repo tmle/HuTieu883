@@ -10,6 +10,7 @@ import Foundation
 
 class ProductModel {
     var name: String = ""
+    var brief: String = ""
     var thumbnailURL: String = "";
     
     init() {

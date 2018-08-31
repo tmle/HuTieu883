@@ -43,6 +43,7 @@ class ProductsTableViewController: UITableViewController {
         for product in productList {
             let productModel = ProductModel()
             productModel.name = product.1["name"].stringValue
+            productModel.brief = product.1["brief"].stringValue
             productModel.thumbnailURL = product.1["thumbnailUrl"].stringValue
             products.append(productModel)
         }
@@ -62,8 +63,12 @@ class ProductsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
 
         let prod = products[indexPath.row]
+        
+        let url = URL(string: prod.thumbnailURL)!
+        let thumbnailURLData = NSData(contentsOf: url as URL)
+        cell.imageView?.image = UIImage(data: thumbnailURLData! as Data)
         cell.textLabel?.text = prod.name
-        cell.detailTextLabel?.text = prod.thumbnailURL
+        cell.detailTextLabel?.text = prod.brief
         
         return cell
     }
