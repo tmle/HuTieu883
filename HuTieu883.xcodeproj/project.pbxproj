@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		322FD0B82139936700CDDD09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0B72139936700CDDD09 /* AppDelegate.swift */; };
-		322FD0BA2139936700CDDD09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0B92139936700CDDD09 /* ViewController.swift */; };
 		322FD0BD2139936800CDDD09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 322FD0BB2139936800CDDD09 /* Main.storyboard */; };
 		322FD0C02139936800CDDD09 /* HuTieu883.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */; };
 		322FD0C22139937200CDDD09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 322FD0C12139937200CDDD09 /* Assets.xcassets */; };
 		322FD0C52139937200CDDD09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */; };
 		322FD0D02139937200CDDD09 /* HuTieu883Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0CF2139937200CDDD09 /* HuTieu883Tests.swift */; };
+		322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */; };
+		322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */; };
+		322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E221399A4C00CDDD09 /* ProductModel.swift */; };
+		7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */; };
+		F5660444304832BC9CC26D92 /* Pods_HuTieu883.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +33,6 @@
 /* Begin PBXFileReference section */
 		322FD0B42139936700CDDD09 /* HuTieu883.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuTieu883.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		322FD0B72139936700CDDD09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		322FD0B92139936700CDDD09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		322FD0BC2139936800CDDD09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		322FD0BF2139936800CDDD09 /* HuTieu883.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HuTieu883.xcdatamodel; sourceTree = "<group>"; };
 		322FD0C12139937200CDDD09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +41,15 @@
 		322FD0CB2139937200CDDD09 /* HuTieu883Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HuTieu883Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		322FD0CF2139937200CDDD09 /* HuTieu883Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuTieu883Tests.swift; sourceTree = "<group>"; };
 		322FD0D12139937200CDDD09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewController.swift; sourceTree = "<group>"; };
+		322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedProductViewController.swift; sourceTree = "<group>"; };
+		322FD0E221399A4C00CDDD09 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.release.xcconfig"; sourceTree = "<group>"; };
+		3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HuTieu883Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HuTieu883.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF1106661BCD81C03F2FBB2 /* Pods-HuTieu883Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		A878FA5D37612345D90C6A0D /* Pods-HuTieu883.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883/Pods-HuTieu883.release.xcconfig"; sourceTree = "<group>"; };
+		C18CA6E87BF464668CE048BF /* Pods-HuTieu883.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883/Pods-HuTieu883.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5660444304832BC9CC26D92 /* Pods_HuTieu883.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,18 +65,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180A4ACF0161C5C8D5F62E69 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */,
+				3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		322FD0AB2139936700CDDD09 = {
 			isa = PBXGroup;
 			children = (
 				322FD0B62139936700CDDD09 /* HuTieu883 */,
 				322FD0CE2139937200CDDD09 /* HuTieu883Tests */,
 				322FD0B52139936700CDDD09 /* Products */,
+				42D672173D3BC20ADB608695 /* Pods */,
+				180A4ACF0161C5C8D5F62E69 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,13 +104,13 @@
 		322FD0B62139936700CDDD09 /* HuTieu883 */ = {
 			isa = PBXGroup;
 			children = (
-				322FD0B72139936700CDDD09 /* AppDelegate.swift */,
-				322FD0B92139936700CDDD09 /* ViewController.swift */,
-				322FD0BB2139936800CDDD09 /* Main.storyboard */,
+				322FD0DB213998E100CDDD09 /* Controller */,
+				322FD0DA213998C800CDDD09 /* View */,
 				322FD0C12139937200CDDD09 /* Assets.xcassets */,
 				322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */,
 				322FD0C62139937200CDDD09 /* Info.plist */,
 				322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */,
+				322FD0E421399A5D00CDDD09 /* Model */,
 			);
 			path = HuTieu883;
 			sourceTree = "<group>";
@@ -99,6 +124,43 @@
 			path = HuTieu883Tests;
 			sourceTree = "<group>";
 		};
+		322FD0DA213998C800CDDD09 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				322FD0BB2139936800CDDD09 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		322FD0DB213998E100CDDD09 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				322FD0B72139936700CDDD09 /* AppDelegate.swift */,
+				322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */,
+				322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		322FD0E421399A5D00CDDD09 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				322FD0E221399A4C00CDDD09 /* ProductModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42D672173D3BC20ADB608695 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C18CA6E87BF464668CE048BF /* Pods-HuTieu883.debug.xcconfig */,
+				A878FA5D37612345D90C6A0D /* Pods-HuTieu883.release.xcconfig */,
+				8BF1106661BCD81C03F2FBB2 /* Pods-HuTieu883Tests.debug.xcconfig */,
+				35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 322FD0D42139937200CDDD09 /* Build configuration list for PBXNativeTarget "HuTieu883" */;
 			buildPhases = (
+				A4BB2F30FE4A49DFDACC9D4D /* [CP] Check Pods Manifest.lock */,
 				322FD0B02139936700CDDD09 /* Sources */,
 				322FD0B12139936700CDDD09 /* Frameworks */,
 				322FD0B22139936700CDDD09 /* Resources */,
+				3EF363A9A36E90A5860D21CC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -123,6 +187,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 322FD0D72139937200CDDD09 /* Build configuration list for PBXNativeTarget "HuTieu883Tests" */;
 			buildPhases = (
+				C0BD0D4D38C02C439902C4A4 /* [CP] Check Pods Manifest.lock */,
 				322FD0C72139937200CDDD09 /* Sources */,
 				322FD0C82139937200CDDD09 /* Frameworks */,
 				322FD0C92139937200CDDD09 /* Resources */,
@@ -195,13 +260,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3EF363A9A36E90A5860D21CC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HuTieu883/Pods-HuTieu883-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HuTieu883/Pods-HuTieu883-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4BB2F30FE4A49DFDACC9D4D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HuTieu883-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0BD0D4D38C02C439902C4A4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HuTieu883Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		322FD0B02139936700CDDD09 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				322FD0BA2139936700CDDD09 /* ViewController.swift in Sources */,
 				322FD0B82139936700CDDD09 /* AppDelegate.swift in Sources */,
+				322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */,
+				322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */,
+				322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */,
 				322FD0C02139936800CDDD09 /* HuTieu883.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +488,7 @@
 		};
 		322FD0D52139937200CDDD09 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C18CA6E87BF464668CE048BF /* Pods-HuTieu883.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -379,6 +508,7 @@
 		};
 		322FD0D62139937200CDDD09 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A878FA5D37612345D90C6A0D /* Pods-HuTieu883.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -398,6 +528,7 @@
 		};
 		322FD0D82139937200CDDD09 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BF1106661BCD81C03F2FBB2 /* Pods-HuTieu883Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -419,6 +550,7 @@
 		};
 		322FD0D92139937200CDDD09 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
