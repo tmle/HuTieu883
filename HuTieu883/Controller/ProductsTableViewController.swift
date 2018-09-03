@@ -14,7 +14,12 @@ class ProductsTableViewController: UITableViewController {
     
     let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_2_skintree.json"
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
+    
     var products: Array = [ProductModel]()
+    
+    var filteredProductNames: Array = [String]()
+    var originProductNames: Array = [String]()
+    
     let pendingOperations = PendingOperations()
     let start = DispatchTime.now() // <<<<<<<<<< Start time
 
@@ -23,8 +28,9 @@ class ProductsTableViewController: UITableViewController {
         title = "List of Products"
 
         getProductData(url: PRODUCT_URL, parameters: params)
+        
     }
-
+    
     // MARK: - Networking
     func getProductData(url: String, parameters: [String: String]) {
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
@@ -49,6 +55,9 @@ class ProductsTableViewController: UITableViewController {
             productModel.brief = product.1["brief"].stringValue
             productModel.thumbnailURL = product.1["thumbnailUrl"].stringValue
             products.append(productModel)
+            
+            originProductNames.append(productModel.name)
+            filteredProductNames.append(productModel.name)
         }
         
     }
@@ -59,7 +68,7 @@ class ProductsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return products.count
+        return filteredProductNames.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,12 +85,13 @@ class ProductsTableViewController: UITableViewController {
         
         //2
         let prod = products[indexPath.row]
+        let name = filteredProductNames[indexPath.row]
 
         //3
-        cell.imageView?.image = prod.thumbnail
+//        cell.imageView?.image = displayedProd.thumbnail
         
         //4
-        switch (prod.state){
+        switch (prod.state) {
         case .failed:
             indicator.stopAnimating()
             cell.textLabel?.text = "Failed to load"
@@ -90,10 +100,10 @@ class ProductsTableViewController: UITableViewController {
             cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
             cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
-            cell.textLabel?.text = prod.name
-            cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
-            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
-            cell.detailTextLabel?.text = prod.brief
+            cell.textLabel?.text = name //displayedProd.name
+//            cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
+//            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
+//            cell.detailTextLabel?.text = displayedProd.brief
         case .new:
             indicator.startAnimating()
             if (!tableView.isDragging && !tableView.isDecelerating) {
@@ -218,4 +228,17 @@ class ProductsTableViewController: UITableViewController {
     }
     */
 
+}
+
+// MARK: - Search Bar methods
+
+extension ProductsTableViewController : UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredProductNames = searchText.isEmpty ? originProductNames : originProductNames.filter({(dataString: String) -> Bool in
+            return dataString.range(of: searchText, options: .caseInsensitive) != nil
+        })
+        tableView.reloadData()
+    }
+    
 }
