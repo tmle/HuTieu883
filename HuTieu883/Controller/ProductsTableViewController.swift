@@ -11,33 +11,38 @@ import SwiftyJSON
 import Alamofire
 
 class ProductsTableViewController: UITableViewController {
+    let pendingOperations = PendingOperations()
+    let start = DispatchTime.now() // <<<<<<<<<< Start time
     
     let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_2_skintree.json"
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
     var products: Array = [ProductModel]()
+    var filteredProducts: Array = [ProductModel]()
     
-    var filteredProductNames: Array = [String]()
-    var originProductNames: Array = [String]()
+    let searchController = UISearchController(searchResultsController: nil)
     
-    let pendingOperations = PendingOperations()
-    let start = DispatchTime.now() // <<<<<<<<<< Start time
-
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "List of Products"
 
-        getProductData(url: PRODUCT_URL, parameters: params)
+        getProductDataFrom(url: PRODUCT_URL, parameters: params)
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Products"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
         
     }
     
     // MARK: - Networking
-    func getProductData(url: String, parameters: [String: String]) {
+    func getProductDataFrom(url: String, parameters: [String: String]) {
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             if response.result.isSuccess {
                 let productJSON : JSON = JSON(response.result.value!)
-                self.obtainProductData(json: productJSON)
+                self.obtainProductDataByDecoding(json: productJSON)
                 self.tableView.reloadData()
             } else {
                 print("Error \(String(describing: response.result.error))")
@@ -46,7 +51,7 @@ class ProductsTableViewController: UITableViewController {
     }
     
     // MARK: - JSON Parsing
-    func obtainProductData(json: JSON) {
+    func obtainProductDataByDecoding(json: JSON) {
         let productList = json["products"]
         
         for product in productList {
@@ -55,20 +60,34 @@ class ProductsTableViewController: UITableViewController {
             productModel.brief = product.1["brief"].stringValue
             productModel.thumbnailURL = product.1["thumbnailUrl"].stringValue
             products.append(productModel)
-            
-            originProductNames.append(productModel.name)
-            filteredProductNames.append(productModel.name)
         }
         
     }
     
-    // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    // MARK: - Private instance methods
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
     }
-
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredProducts = products.filter({ (product: ProductModel) -> Bool in
+            return product.name.lowercased().contains(searchText.lowercased())
+        })
+        
+        tableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredProductNames.count
+        if isFiltering() {
+            return filteredProducts.count
+        }
+        
+        return products.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,11 +103,16 @@ class ProductsTableViewController: UITableViewController {
         
         
         //2
-        let prod = products[indexPath.row]
-        let name = filteredProductNames[indexPath.row]
-
+        let prod: ProductModel
+        
+        if isFiltering() {
+            prod = filteredProducts[indexPath.row]
+        } else {
+            prod = products[indexPath.row]
+        }
+        
         //3
-//        cell.imageView?.image = displayedProd.thumbnail
+        cell.imageView?.image = prod.thumbnail
         
         //4
         switch (prod.state) {
@@ -100,10 +124,10 @@ class ProductsTableViewController: UITableViewController {
             cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
             cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
-            cell.textLabel?.text = name //displayedProd.name
-//            cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
-//            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
-//            cell.detailTextLabel?.text = displayedProd.brief
+            cell.textLabel?.text = prod.name
+            cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
+            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.detailTextLabel?.text = prod.brief
         case .new:
             indicator.startAnimating()
             if (!tableView.isDragging && !tableView.isDecelerating) {
@@ -232,13 +256,20 @@ class ProductsTableViewController: UITableViewController {
 
 // MARK: - Search Bar methods
 
-extension ProductsTableViewController : UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredProductNames = searchText.isEmpty ? originProductNames : originProductNames.filter({(dataString: String) -> Bool in
-            return dataString.range(of: searchText, options: .caseInsensitive) != nil
-        })
-        tableView.reloadData()
+extension ProductsTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
-    
 }
+
+// This method is used for iOS 9.3, with a UISearchBar placed in the storyboard.
+//extension ProductsTableViewController : UISearchBarDelegate {
+//
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        filteredProductNames = searchText.isEmpty ? originProductNames : originProductNames.filter({(dataString: String) -> Bool in
+//            return dataString.range(of: searchText, options: .caseInsensitive) != nil
+//        })
+//        tableView.reloadData()
+//    }
+//
+//}

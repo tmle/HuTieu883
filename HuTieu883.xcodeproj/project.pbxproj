@@ -16,6 +16,7 @@
 		322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */; };
 		322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */; };
 		322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E221399A4C00CDDD09 /* ProductModel.swift */; };
+		32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD8151213DD442001E845A /* DataTableViewCell.swift */; };
 		7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */; };
 		F5660444304832BC9CC26D92 /* Pods_HuTieu883.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewController.swift; sourceTree = "<group>"; };
 		322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedProductViewController.swift; sourceTree = "<group>"; };
 		322FD0E221399A4C00CDDD09 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		32FD8151213DD442001E845A /* DataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.release.xcconfig"; sourceTree = "<group>"; };
 		3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HuTieu883Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HuTieu883.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				322FD0BB2139936800CDDD09 /* Main.storyboard */,
+				32FD8151213DD442001E845A /* DataTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				322FD0B82139936700CDDD09 /* AppDelegate.swift in Sources */,
+				32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */,
 				322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */,
 				322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */,
 				322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */,
@@ -423,7 +427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -477,7 +481,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -494,7 +498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KD2N297A7;
 				INFOPLIST_FILE = HuTieu883/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -514,7 +518,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KD2N297A7;
 				INFOPLIST_FILE = HuTieu883/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
