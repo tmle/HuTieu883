@@ -241,6 +241,47 @@ class ProductsTableViewController: UITableViewController {
             }
         }
     }
+    
+    // MARK: - TableView Delegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        
+        tableView.cellForRow(at: indexPath)?.accessoryType = tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark ? .none : .checkmark
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: - Refresh button
+
+    @IBAction func refreshButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Update coredata", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+            //
+            let prod = ProductModel()
+            prod.name = textField.text!
+            prod.brief = "So inconvenient"
+            prod.thumbnailURL = "https://thinhmle.com/eCommerce/images/skintree/SM-RednessReliefCalmPlex.jpg"
+            
+            self.products.append(prod)
+            
+            self.tableView.reloadData()
+            
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
