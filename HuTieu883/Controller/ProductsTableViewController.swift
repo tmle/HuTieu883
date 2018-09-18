@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+//import CoreData
 
 class ProductsTableViewController: UITableViewController {
     let pendingOperations = PendingOperations()
@@ -17,7 +18,13 @@ class ProductsTableViewController: UITableViewController {
     let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_2_skintree.json"
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
-    var products: Array = [ProductModel]()
+    //userdefaults
+    let defaults = UserDefaults.standard
+    var productNames: Array = [String]()
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+    var products: Array = [ProductModel]() //data copied from Core Data
     var filteredProducts: Array = [ProductModel]()
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -25,6 +32,14 @@ class ProductsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "List of Products"
+        
+        //userdefaults
+        if let names = defaults.array(forKey: "productNames") as? [String] {
+            productNames = names
+        }
+        print(productNames)
+        
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
         getProductDataFrom(url: PRODUCT_URL, parameters: params)
         
@@ -33,7 +48,7 @@ class ProductsTableViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search Products"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
+                
     }
     
     // MARK: - Networking
@@ -54,7 +69,7 @@ class ProductsTableViewController: UITableViewController {
     func obtainProductDataByDecoding(json: JSON) {
         let productList = json["products"]
         
-        for product in productList {
+            for product in productList {
             let productModel = ProductModel()
             productModel.name = product.1["name"].stringValue
             productModel.brief = product.1["brief"].stringValue
@@ -137,6 +152,17 @@ class ProductsTableViewController: UITableViewController {
 
         return cell
     }
+    
+    // MARK: - Model Manipulating Methods
+    func saveProducts() {
+        
+        do {
+           try context.save()
+        } catch {
+            print("Error saving context \(error)")
+        }
+    }
+    
     
     // MARK: - Asynchronous Image Downloading
     func startOperationsForProductModel(_ product: ProductModel, indexPath: IndexPath){
@@ -259,12 +285,16 @@ class ProductsTableViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Update coredata", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add product", style: .default) { (action) in
             //
             let prod = ProductModel()
             prod.name = textField.text!
             prod.brief = "So inconvenient"
             prod.thumbnailURL = "https://thinhmle.com/eCommerce/images/skintree/SM-RednessReliefCalmPlex.jpg"
+            
+            //userdefaults
+            self.productNames.append(prod.name)
+            self.defaults.set(self.productNames, forKey: "productNames")
             
             self.products.append(prod)
             

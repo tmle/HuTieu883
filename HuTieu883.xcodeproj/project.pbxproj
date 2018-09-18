@@ -111,7 +111,6 @@
 				322FD0C12139937200CDDD09 /* Assets.xcassets */,
 				322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */,
 				322FD0C62139937200CDDD09 /* Info.plist */,
-				322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */,
 				322FD0E421399A5D00CDDD09 /* Model */,
 			);
 			path = HuTieu883;
@@ -148,6 +147,7 @@
 		322FD0E421399A5D00CDDD09 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */,
 				322FD0E221399A4C00CDDD09 /* ProductModel.swift */,
 			);
 			path = Model;
@@ -305,16 +305,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HuTieu883/Pods-HuTieu883-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
