@@ -16,6 +16,7 @@
 		322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */; };
 		322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */; };
 		322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E221399A4C00CDDD09 /* ProductModel.swift */; };
+		32ACB68E215186BC006B713F /* ProductModelSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACB68D215186BC006B713F /* ProductModelSimple.swift */; };
 		32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD8151213DD442001E845A /* DataTableViewCell.swift */; };
 		7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */; };
 		F5660444304832BC9CC26D92 /* Pods_HuTieu883.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863C3CE9A5A782B7EB59754C /* Pods_HuTieu883.framework */; };
@@ -45,6 +46,7 @@
 		322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewController.swift; sourceTree = "<group>"; };
 		322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedProductViewController.swift; sourceTree = "<group>"; };
 		322FD0E221399A4C00CDDD09 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		32ACB68D215186BC006B713F /* ProductModelSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModelSimple.swift; sourceTree = "<group>"; };
 		32FD8151213DD442001E845A /* DataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.release.xcconfig"; sourceTree = "<group>"; };
 		3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HuTieu883Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,8 +110,7 @@
 			children = (
 				322FD0DB213998E100CDDD09 /* Controller */,
 				322FD0DA213998C800CDDD09 /* View */,
-				322FD0C12139937200CDDD09 /* Assets.xcassets */,
-				322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */,
+				32ACB68C21517C4F006B713F /* Supporting Files */,
 				322FD0C62139937200CDDD09 /* Info.plist */,
 				322FD0E421399A5D00CDDD09 /* Model */,
 			);
@@ -149,8 +150,18 @@
 			children = (
 				322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */,
 				322FD0E221399A4C00CDDD09 /* ProductModel.swift */,
+				32ACB68D215186BC006B713F /* ProductModelSimple.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		32ACB68C21517C4F006B713F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				322FD0C12139937200CDDD09 /* Assets.xcassets */,
+				322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		42D672173D3BC20ADB608695 /* Pods */ = {
@@ -333,6 +344,7 @@
 				322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */,
 				322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */,
 				322FD0C02139936800CDDD09 /* HuTieu883.xcdatamodeld in Sources */,
+				32ACB68E215186BC006B713F /* ProductModelSimple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

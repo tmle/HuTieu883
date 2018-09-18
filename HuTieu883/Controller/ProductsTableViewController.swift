@@ -9,35 +9,27 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
-//import CoreData
 
 class ProductsTableViewController: UITableViewController {
     let pendingOperations = PendingOperations()
-    let start = DispatchTime.now() // <<<<<<<<<< Start time
+    let start = DispatchTime.now()
     
-    let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_2_skintree.json"
+    let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_skintree.json"
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
-    //userdefaults
-    let defaults = UserDefaults.standard
-    var productNames: Array = [String]()
+    //NSCoder
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Products.plist")
+    var productsSimple: Array = [ProductModelSimple]()
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
     var products: Array = [ProductModel]() //data copied from Core Data
     var filteredProducts: Array = [ProductModel]()
+    
     
     let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "List of Products"
-        
-        //userdefaults
-        if let names = defaults.array(forKey: "productNames") as? [String] {
-            productNames = names
-        }
-        print(productNames)
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
@@ -48,7 +40,7 @@ class ProductsTableViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search Products"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-                
+        
     }
     
     // MARK: - Networking
@@ -58,9 +50,8 @@ class ProductsTableViewController: UITableViewController {
             if response.result.isSuccess {
                 let productJSON : JSON = JSON(response.result.value!)
                 self.obtainProductDataByDecoding(json: productJSON)
-                self.tableView.reloadData()
             } else {
-                print("Error \(String(describing: response.result.error))")
+                print("Error connecting to the internet \(String(describing: response.result.error))")
             }
         }
     }
@@ -69,14 +60,17 @@ class ProductsTableViewController: UITableViewController {
     func obtainProductDataByDecoding(json: JSON) {
         let productList = json["products"]
         
-            for product in productList {
-            let productModel = ProductModel()
-            productModel.name = product.1["name"].stringValue
-            productModel.brief = product.1["brief"].stringValue
-            productModel.thumbnailURL = product.1["thumbnailUrl"].stringValue
-            products.append(productModel)
+        for product in productList {
+            let productModelSimple = ProductModelSimple()
+            productModelSimple.name = product.1["name"].stringValue
+            productModelSimple.brief = product.1["brief"].stringValue
+            productModelSimple.thumbnailURL = product.1["thumbnailUrl"].stringValue
+            productsSimple.append(productModelSimple)
         }
         
+        self.saveProductsToLocal()
+        self.loadProductsFromLocal()
+
     }
     
     // MARK: - Private instance methods
@@ -127,13 +121,17 @@ class ProductsTableViewController: UITableViewController {
         }
         
         //3
-        cell.imageView?.image = prod.thumbnail
         
         //4
         switch (prod.state) {
         case .failed:
             indicator.stopAnimating()
-            cell.textLabel?.text = "Failed to load"
+            cell.textLabel?.text = "failed to load"
+            cell.textLabel!.textColor = UIColor.black
+            cell.detailTextLabel?.text = "..."
+            cell.detailTextLabel!.textColor = UIColor.black
+            cell.imageView?.image = UIImage(named: "not-avail-48x48.png")
+            
         case .downloaded:
             indicator.stopAnimating()
             cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -143,8 +141,18 @@ class ProductsTableViewController: UITableViewController {
             cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
             cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
             cell.detailTextLabel?.text = prod.brief
+            cell.imageView?.image = prod.thumbnail
+
         case .new:
             indicator.startAnimating()
+            cell.imageView?.image = UIImage(named: "camera-48x48.png")
+            cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
+            cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.textLabel?.text = "downloading ... "
+            cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
+            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.detailTextLabel?.text = "..."
+            
             if (!tableView.isDragging && !tableView.isDecelerating) {
                 self.startOperationsForProductModel(prod, indexPath: indexPath)
             }
@@ -153,17 +161,6 @@ class ProductsTableViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - Model Manipulating Methods
-    func saveProducts() {
-        
-        do {
-           try context.save()
-        } catch {
-            print("Error saving context \(error)")
-        }
-    }
-    
-    
     // MARK: - Asynchronous Image Downloading
     func startOperationsForProductModel(_ product: ProductModel, indexPath: IndexPath){
         switch (product.state) {
@@ -171,7 +168,7 @@ class ProductsTableViewController: UITableViewController {
             startDownloadForProduct(product, indexPath: indexPath)
             
         case .downloaded:
-            let end = DispatchTime.now()   // <<<<<<<<<<   end time
+            let end = DispatchTime.now()
             
             //    let theAnswer = self.checkAnswer(answerNum: "\(problemNumber)", guess: myGuess)
             let nanoTime = end.uptimeNanoseconds - self.start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
@@ -278,38 +275,45 @@ class ProductsTableViewController: UITableViewController {
     }
     
     // MARK: - Refresh button
-
     @IBAction func refreshButtonPressed(_ sender: UIBarButtonItem) {
+        productsSimple.removeAll()
+        getProductDataFrom(url: PRODUCT_URL, parameters: params)
+    }
+    
+    // MARK: - Model Manipulation Methods
+    func saveProductsToLocal() {
+        let encoder = PropertyListEncoder()
         
-        var textField = UITextField()
-        
-        let alert = UIAlertController(title: "Update coredata", message: "", preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "Add product", style: .default) { (action) in
-            //
-            let prod = ProductModel()
-            prod.name = textField.text!
-            prod.brief = "So inconvenient"
-            prod.thumbnailURL = "https://thinhmle.com/eCommerce/images/skintree/SM-RednessReliefCalmPlex.jpg"
-            
-            //userdefaults
-            self.productNames.append(prod.name)
-            self.defaults.set(self.productNames, forKey: "productNames")
-            
-            self.products.append(prod)
-            
-            self.tableView.reloadData()
-            
+        do {
+            let data = try encoder.encode(productsSimple)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding product array \(error)")
         }
         
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
-            textField = alertTextField
+    }
+    
+    func loadProductsFromLocal() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                productsSimple = try decoder.decode([ProductModelSimple].self, from: data)
+            } catch {
+               print("Error decoding product array")
+            }
         }
         
-        alert.addAction(action)
+        products.removeAll()
+        for productSimple in productsSimple {
+            let productModel = ProductModel()
+            productModel.name = productSimple.name
+            productModel.brief = productSimple.brief
+            productModel.thumbnailURL = productSimple.thumbnailURL
+            products.append(productModel)
+        }
         
-        present(alert, animated: true, completion: nil)
+        self.tableView.reloadData()
+
     }
     
 
@@ -326,7 +330,6 @@ class ProductsTableViewController: UITableViewController {
 }
 
 // MARK: - Search Bar methods
-
 extension ProductsTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
