@@ -19,26 +19,18 @@ class ProductsTableViewController: UITableViewController {
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
     var products: Array = [ProductModel]() //data copied from Core Data
-    var filteredProducts: Array = [ProductModel]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var productDataArray: Array = [ProductData]()
-    
-    let searchController = UISearchController(searchResultsController: nil)
+    let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "List of Products"
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
         getProductDataFrom(url: PRODUCT_URL, parameters: params)
-        
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Products"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
         
     }
     
@@ -74,28 +66,11 @@ class ProductsTableViewController: UITableViewController {
 
     }
     
-    // MARK: - Private instance methods
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredProducts = products.filter({ (product: ProductModel) -> Bool in
-            return product.name.lowercased().contains(searchText.lowercased())
-        })
-        
-        tableView.reloadData()
-    }
-    
-    func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
-    }
-    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return filteredProducts.count
-        }
+//        if isFiltering() {
+//            return filteredProducts.count
+//        }
         
         return products.count
     }
@@ -103,23 +78,14 @@ class ProductsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
 
-        //1
         if cell.accessoryView == nil {
             let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
             cell.accessoryView = indicator
         }
         let indicator = cell.accessoryView as! UIActivityIndicatorView
         
-        //2
-        let prod: ProductModel
+        let prod:ProductModel = products[indexPath.row]
         
-        if isFiltering() {
-            prod = filteredProducts[indexPath.row]
-        } else {
-            prod = products[indexPath.row]
-        }
-        
-        //4
         switch (prod.state) {
         case .failed:
             indicator.stopAnimating()
@@ -167,10 +133,8 @@ class ProductsTableViewController: UITableViewController {
         case .downloaded:
             let end = DispatchTime.now()
             
-            //    let theAnswer = self.checkAnswer(answerNum: "\(problemNumber)", guess: myGuess)
-            let nanoTime = end.uptimeNanoseconds - self.start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
-            let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
-            
+            let nanoTime = end.uptimeNanoseconds - self.start.uptimeNanoseconds
+            let timeInterval = Double(nanoTime) / 1_000_000_000
             print("Time to get first photo: \(timeInterval) seconds")
             
         default:
@@ -179,14 +143,12 @@ class ProductsTableViewController: UITableViewController {
     }
     
     func startDownloadForProduct(_ product: ProductModel, indexPath: IndexPath){
-        //1
         if pendingOperations.downloadsInProgress[indexPath] != nil {
             return
         }
         
-        //2
         let downloader = ImageDownloader(productModel: product)
-        //3
+
         downloader.completionBlock = {
             if downloader.isCancelled {
                 return
@@ -196,20 +158,17 @@ class ProductsTableViewController: UITableViewController {
                 self.tableView.reloadRows(at: [indexPath], with: .fade)
             })
         }
-        //4
         pendingOperations.downloadsInProgress[indexPath] = downloader
-        //5
+
         pendingOperations.downloadQueue.addOperation(downloader)
     }
     
     // MARK: - Table Cell Operations
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        //1
         suspendAllOperations()
     }
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        // 2
         if !decelerate {
             loadImagesForOnscreenCells()
             resumeAllOperations()
@@ -217,7 +176,6 @@ class ProductsTableViewController: UITableViewController {
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        // 3
         loadImagesForOnscreenCells()
         resumeAllOperations()
     }
@@ -231,21 +189,16 @@ class ProductsTableViewController: UITableViewController {
     }
     
     func loadImagesForOnscreenCells () {
-        //1
         if let pathsArray = tableView.indexPathsForVisibleRows {
-            //2
             let allPendingOperations = Set(Array(pendingOperations.downloadsInProgress.keys))
             
-            //3
             var toBeCancelled = allPendingOperations
             let visiblePaths = Set(pathsArray )
             toBeCancelled.subtract(visiblePaths)
             
-            //4
             var toBeStarted = visiblePaths
             toBeStarted.subtract(allPendingOperations)
             
-            // 5
             for indexPath in toBeCancelled {
                 if let pendingDownload = pendingOperations.downloadsInProgress[indexPath] {
                     pendingDownload.cancel()
@@ -253,7 +206,6 @@ class ProductsTableViewController: UITableViewController {
                 pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
             }
             
-            // 6
             for indexPath in toBeStarted {
                 let indexPath = indexPath as IndexPath
                 let productToProcess = self.products[(indexPath as NSIndexPath).row]
@@ -287,9 +239,7 @@ class ProductsTableViewController: UITableViewController {
         }
     }
     
-    func loadProductsFromCoreData() {
-        
-        let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
+    func loadProductsFromCoreData(with request: NSFetchRequest<ProductData> = ProductData.fetchRequest()) {
         
         do {
            productDataArray = try context.fetch(request)
@@ -310,9 +260,7 @@ class ProductsTableViewController: UITableViewController {
     }
     
     func deleteProductsFromCoreData() {
-        
-        let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
-        
+
         do {
             productDataArray = try context.fetch(request)
         } catch {
@@ -342,20 +290,27 @@ class ProductsTableViewController: UITableViewController {
 }
 
 // MARK: - Search Bar methods
-extension ProductsTableViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+extension ProductsTableViewController : UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        loadProductsFromCoreData(with: request)
+        
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadProductsFromCoreData(with: request)
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
 }
-
-// This method is used for iOS 9.3, with a UISearchBar placed in the storyboard.
-//extension ProductsTableViewController : UISearchBarDelegate {
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        filteredProductNames = searchText.isEmpty ? originProductNames : originProductNames.filter({(dataString: String) -> Bool in
-//            return dataString.range(of: searchText, options: .caseInsensitive) != nil
-//        })
-//        tableView.reloadData()
-//    }
-//
-//}
