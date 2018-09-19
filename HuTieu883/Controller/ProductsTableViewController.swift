@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import CoreData
 
 class ProductsTableViewController: UITableViewController {
     let pendingOperations = PendingOperations()
@@ -17,13 +18,11 @@ class ProductsTableViewController: UITableViewController {
     let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_skintree.json"
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
-    //NSCoder
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Products.plist")
-    var productsSimple: Array = [ProductModelSimple]()
-    
     var products: Array = [ProductModel]() //data copied from Core Data
     var filteredProducts: Array = [ProductModel]()
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var productDataArray: Array = [ProductData]()
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -60,16 +59,18 @@ class ProductsTableViewController: UITableViewController {
     func obtainProductDataByDecoding(json: JSON) {
         let productList = json["products"]
         
+        self.deleteProductsFromCoreData()
+        productDataArray.removeAll()
         for product in productList {
-            let productModelSimple = ProductModelSimple()
-            productModelSimple.name = product.1["name"].stringValue
-            productModelSimple.brief = product.1["brief"].stringValue
-            productModelSimple.thumbnailURL = product.1["thumbnailUrl"].stringValue
-            productsSimple.append(productModelSimple)
+            let productData = ProductData(context: self.context)
+            productData.name = product.1["name"].stringValue
+            productData.brief = product.1["brief"].stringValue
+            productData.thumbnailURL = product.1["thumbnailUrl"].stringValue
+            productDataArray.append(productData)
         }
         
-        self.saveProductsToLocal()
-        self.loadProductsFromLocal()
+        self.saveProductsToCoreData()
+        self.loadProductsFromCoreData()
 
     }
     
@@ -102,14 +103,12 @@ class ProductsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
 
-        
         //1
         if cell.accessoryView == nil {
             let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
             cell.accessoryView = indicator
         }
         let indicator = cell.accessoryView as! UIActivityIndicatorView
-        
         
         //2
         let prod: ProductModel
@@ -119,8 +118,6 @@ class ProductsTableViewController: UITableViewController {
         } else {
             prod = products[indexPath.row]
         }
-        
-        //3
         
         //4
         switch (prod.state) {
@@ -276,47 +273,62 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - Refresh button
     @IBAction func refreshButtonPressed(_ sender: UIBarButtonItem) {
-        productsSimple.removeAll()
+        productDataArray.removeAll()
         getProductDataFrom(url: PRODUCT_URL, parameters: params)
     }
     
     // MARK: - Model Manipulation Methods
-    func saveProductsToLocal() {
-        let encoder = PropertyListEncoder()
+    func saveProductsToCoreData() {
         
         do {
-            let data = try encoder.encode(productsSimple)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding product array \(error)")
+            print("Error saving context \(error)")
         }
-        
     }
     
-    func loadProductsFromLocal() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                productsSimple = try decoder.decode([ProductModelSimple].self, from: data)
-            } catch {
-               print("Error decoding product array")
-            }
+    func loadProductsFromCoreData() {
+        
+        let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
+        
+        do {
+           productDataArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
         }
         
         products.removeAll()
-        for productSimple in productsSimple {
+        for productData in productDataArray {
             let productModel = ProductModel()
-            productModel.name = productSimple.name
-            productModel.brief = productSimple.brief
-            productModel.thumbnailURL = productSimple.thumbnailURL
+            productModel.name = productData.name!
+            productModel.brief = productData.brief!
+            productModel.thumbnailURL = productData.thumbnailURL!
             products.append(productModel)
         }
         
         self.tableView.reloadData()
-
     }
     
-
+    func deleteProductsFromCoreData() {
+        
+        let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
+        
+        do {
+            productDataArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+        
+        if productDataArray.count > 0 {
+            for i in 0..<productDataArray.count {
+                context.delete(productDataArray[i])
+            }
+        }
+        
+        self.saveProductsToCoreData()
+        
+    }
+    
     /*
     // MARK: - Navigation
 
