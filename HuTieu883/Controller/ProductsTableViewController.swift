@@ -19,6 +19,7 @@ class ProductsTableViewController: UITableViewController {
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
     var products: Array = [ProductModel]() //data copied from Core Data
+    var productSelected: ProductModel? = nil
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var productDataArray: Array = [ProductData]()
@@ -57,7 +58,12 @@ class ProductsTableViewController: UITableViewController {
             let productData = ProductData(context: self.context)
             productData.name = product.1["name"].stringValue
             productData.brief = product.1["brief"].stringValue
+            productData.desc = product.1["description"].stringValue
             productData.thumbnailURL = product.1["thumbnailUrl"].stringValue
+            productData.currency = product.1["currency"].stringValue
+            productData.price = product.1["price"].stringValue
+            productData.unit = product.1["unit"].stringValue
+            productData.weight = product.1["weight"].stringValue
             productDataArray.append(productData)
         }
         
@@ -68,10 +74,6 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if isFiltering() {
-//            return filteredProducts.count
-//        }
-        
         return products.count
     }
 
@@ -97,7 +99,6 @@ class ProductsTableViewController: UITableViewController {
             
         case .downloaded:
             indicator.stopAnimating()
-            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
             cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
             cell.textLabel?.text = prod.name
@@ -216,11 +217,13 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         
         tableView.cellForRow(at: indexPath)?.accessoryType = tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark ? .none : .checkmark
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.productSelected = self.products[indexPath.row]
+        performSegue(withIdentifier: "ShowDetailVC", sender: self)
     }
     
     // MARK: - Refresh button
@@ -252,7 +255,12 @@ class ProductsTableViewController: UITableViewController {
             let productModel = ProductModel()
             productModel.name = productData.name!
             productModel.brief = productData.brief!
+            productModel.desc = productData.desc!
             productModel.thumbnailURL = productData.thumbnailURL!
+            productModel.currency = productData.currency!
+            productModel.price = productData.price!
+            productModel.unit = productData.unit!
+            productModel.weight = productData.weight!
             products.append(productModel)
         }
         
@@ -277,15 +285,15 @@ class ProductsTableViewController: UITableViewController {
         
     }
     
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "ShowDetailVC") {
+            if let detailedProductViewController = segue.destination as? DetailedProductViewController {
+                detailedProductViewController.productSelected = self.productSelected
+            }
+        }
     }
-    */
 
 }
 

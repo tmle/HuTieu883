@@ -16,6 +16,7 @@
 		322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */; };
 		322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */; };
 		322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E221399A4C00CDDD09 /* ProductModel.swift */; };
+		32A051082152DC60008BCDB2 /* 11-AddToCart48.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A051072152DC60008BCDB2 /* 11-AddToCart48.png */; };
 		32ACB68E215186BC006B713F /* ProductModelSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACB68D215186BC006B713F /* ProductModelSimple.swift */; };
 		32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD8151213DD442001E845A /* DataTableViewCell.swift */; };
 		7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */; };
@@ -46,6 +47,7 @@
 		322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewController.swift; sourceTree = "<group>"; };
 		322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedProductViewController.swift; sourceTree = "<group>"; };
 		322FD0E221399A4C00CDDD09 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		32A051072152DC60008BCDB2 /* 11-AddToCart48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-AddToCart48.png"; sourceTree = "<group>"; };
 		32ACB68D215186BC006B713F /* ProductModelSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModelSimple.swift; sourceTree = "<group>"; };
 		32FD8151213DD442001E845A /* DataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				322FD0C12139937200CDDD09 /* Assets.xcassets */,
+				32A051072152DC60008BCDB2 /* 11-AddToCart48.png */,
 				322FD0C32139937200CDDD09 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
@@ -261,6 +264,7 @@
 			files = (
 				322FD0C52139937200CDDD09 /* LaunchScreen.storyboard in Resources */,
 				322FD0C22139937200CDDD09 /* Assets.xcassets in Resources */,
+				32A051082152DC60008BCDB2 /* 11-AddToCart48.png in Resources */,
 				322FD0BD2139936800CDDD09 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

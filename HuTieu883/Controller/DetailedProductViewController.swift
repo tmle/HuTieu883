@@ -9,18 +9,34 @@
 import UIKit
 
 class DetailedProductViewController: UIViewController {
-
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var descTextView: UITextView!
+    
+    @IBOutlet weak var currencyLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var unitLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
+    
+    var productSelected: ProductModel? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.nameLabel.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+        self.nameLabel.text = productSelected?.name
+        
+        self.descTextView.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+        self.descTextView.text = productSelected?.desc
+        self.thumbnailImageView.image = productSelected?.thumbnail
+        
+        self.currencyLabel.text = productSelected?.currency
+        self.priceLabel.text = productSelected?.price        
+        self.unitLabel.text = productSelected?.unit
+        self.weightLabel.text = productSelected?.weight
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     /*
     // MARK: - Navigation

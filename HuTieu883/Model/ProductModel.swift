@@ -17,7 +17,12 @@ enum ProductModelState {
 class ProductModel {
     var name: String = ""
     var brief: String = ""
+    var desc: String = ""
     var thumbnailURL: String = ""
+    var currency: String = ""
+    var price: String = ""
+    var unit: String = ""
+    var weight: String = ""
     var state = ProductModelState.new
     var thumbnail = UIImage(named: "camera-48x48.png")
     
