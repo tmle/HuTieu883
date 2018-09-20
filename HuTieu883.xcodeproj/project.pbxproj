@@ -17,6 +17,8 @@
 		322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */; };
 		322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322FD0E221399A4C00CDDD09 /* ProductModel.swift */; };
 		32A051082152DC60008BCDB2 /* 11-AddToCart48.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A051072152DC60008BCDB2 /* 11-AddToCart48.png */; };
+		32A0510A2152FA04008BCDB2 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A051092152FA04008BCDB2 /* CategoryViewController.swift */; };
+		32A0510C21530EEE008BCDB2 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A0510B21530EEE008BCDB2 /* CategoryModel.swift */; };
 		32ACB68E215186BC006B713F /* ProductModelSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ACB68D215186BC006B713F /* ProductModelSimple.swift */; };
 		32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD8151213DD442001E845A /* DataTableViewCell.swift */; };
 		7FC01C8565C74C418FA3109B /* Pods_HuTieu883Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2FBDC10F2AA44371B37434 /* Pods_HuTieu883Tests.framework */; };
@@ -48,6 +50,8 @@
 		322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedProductViewController.swift; sourceTree = "<group>"; };
 		322FD0E221399A4C00CDDD09 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		32A051072152DC60008BCDB2 /* 11-AddToCart48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-AddToCart48.png"; sourceTree = "<group>"; };
+		32A051092152FA04008BCDB2 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		32A0510B21530EEE008BCDB2 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		32ACB68D215186BC006B713F /* ProductModelSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModelSimple.swift; sourceTree = "<group>"; };
 		32FD8151213DD442001E845A /* DataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		35AE37145E8C46449918F52D /* Pods-HuTieu883Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HuTieu883Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HuTieu883Tests/Pods-HuTieu883Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 		322FD0B62139936700CDDD09 /* HuTieu883 */ = {
 			isa = PBXGroup;
 			children = (
+				322FD0B72139936700CDDD09 /* AppDelegate.swift */,
 				322FD0DB213998E100CDDD09 /* Controller */,
 				322FD0DA213998C800CDDD09 /* View */,
 				32ACB68C21517C4F006B713F /* Supporting Files */,
@@ -140,7 +145,7 @@
 		322FD0DB213998E100CDDD09 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				322FD0B72139936700CDDD09 /* AppDelegate.swift */,
+				32A051092152FA04008BCDB2 /* CategoryViewController.swift */,
 				322FD0DE2139998C00CDDD09 /* ProductsTableViewController.swift */,
 				322FD0E0213999C100CDDD09 /* DetailedProductViewController.swift */,
 			);
@@ -153,6 +158,7 @@
 				322FD0BE2139936800CDDD09 /* HuTieu883.xcdatamodeld */,
 				322FD0E221399A4C00CDDD09 /* ProductModel.swift */,
 				32ACB68D215186BC006B713F /* ProductModelSimple.swift */,
+				32A0510B21530EEE008BCDB2 /* CategoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,9 +237,11 @@
 				TargetAttributes = {
 					322FD0B32139936700CDDD09 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 					};
 					322FD0CA2139937200CDDD09 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = 322FD0B32139936700CDDD09;
 					};
 				};
@@ -346,8 +354,10 @@
 				32FD8152213DD442001E845A /* DataTableViewCell.swift in Sources */,
 				322FD0DF2139998C00CDDD09 /* ProductsTableViewController.swift in Sources */,
 				322FD0E321399A4C00CDDD09 /* ProductModel.swift in Sources */,
+				32A0510A2152FA04008BCDB2 /* CategoryViewController.swift in Sources */,
 				322FD0E1213999C100CDDD09 /* DetailedProductViewController.swift in Sources */,
 				322FD0C02139936800CDDD09 /* HuTieu883.xcdatamodeld in Sources */,
+				32A0510C21530EEE008BCDB2 /* CategoryModel.swift in Sources */,
 				32ACB68E215186BC006B713F /* ProductModelSimple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,7 +451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -495,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -512,14 +522,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KD2N297A7;
 				INFOPLIST_FILE = HuTieu883/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thinhmle.HuTieu883;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -532,14 +542,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KD2N297A7;
 				INFOPLIST_FILE = HuTieu883/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thinhmle.HuTieu883;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -560,7 +570,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thinhmle.HuTieu883Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HuTieu883.app/HuTieu883";
 			};
@@ -582,7 +592,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thinhmle.HuTieu883Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HuTieu883.app/HuTieu883";
 			};

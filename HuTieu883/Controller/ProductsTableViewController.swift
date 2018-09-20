@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import SwiftyJSON
 import Alamofire
+import SwiftyJSON
 import CoreData
 
 class ProductsTableViewController: UITableViewController {
@@ -20,6 +20,7 @@ class ProductsTableViewController: UITableViewController {
     
     var products: Array = [ProductModel]() //data copied from Core Data
     var productSelected: ProductModel? = nil
+    var categorySelected: String? = ""
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var productDataArray: Array = [ProductData]()
@@ -27,7 +28,12 @@ class ProductsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "List of Products"
+        
+        if (self.categorySelected! == "skincare") {
+            title = "Skin Care Products"
+        } else {
+            title = "Supplements"
+        }
         
 //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
@@ -50,7 +56,7 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - JSON Parsing
     func obtainProductDataByDecoding(json: JSON) {
-        let productList = json["products"]
+        let productList = json[self.categorySelected!]
         
         self.deleteProductsFromCoreData()
         productDataArray.removeAll()
@@ -81,10 +87,28 @@ class ProductsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
 
         if cell.accessoryView == nil {
-            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            let indicator = UIActivityIndicatorView(style: .gray)
             cell.accessoryView = indicator
         }
         let indicator = cell.accessoryView as! UIActivityIndicatorView
+        
+        let myView = UIView()
+        if (self.categorySelected! == "skincare") {
+            if (indexPath.row % 2 == 0) {
+                myView.backgroundColor = UIColor(red: 0.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
+            } else {
+                myView.backgroundColor = UIColor(red: 0.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+            }
+        } else {
+            if (indexPath.row % 2 == 0) {
+                myView.backgroundColor = UIColor(red: 120.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
+            } else {
+                myView.backgroundColor = UIColor(red: 150.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+            }
+            
+        }
+        
+        cell.backgroundView = myView;
         
         let prod:ProductModel = products[indexPath.row]
         
@@ -232,7 +256,7 @@ class ProductsTableViewController: UITableViewController {
         getProductDataFrom(url: PRODUCT_URL, parameters: params)
     }
     
-    // MARK: - Model Manipulation Methods
+    // MARK: - Data Manipulation Methods
     func saveProductsToCoreData() {
         
         do {
@@ -286,7 +310,6 @@ class ProductsTableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ShowDetailVC") {
             if let detailedProductViewController = segue.destination as? DetailedProductViewController {

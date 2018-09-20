@@ -10,6 +10,38 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Category View Controller-->
+        <scene sceneID="3zk-13-NYB">
+            <objects>
+                <tableViewController id="FQD-Xf-eZO" customClass="CategoryViewController" customModule="HuTieu883" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lYX-Pj-VwP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CategoryCell" id="RdY-UY-jV9">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RdY-UY-jV9" id="4lo-WU-EhI">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="FQD-Xf-eZO" id="lb9-kj-mv6"/>
+                            <outlet property="delegate" destination="FQD-Xf-eZO" id="N2Y-ro-lNn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="j5T-V0-Hu6"/>
+                    <connections>
+                        <segue destination="pIx-EI-acD" kind="show" identifier="ShowProductsTableVC" id="8Y0-h8-VWh"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cpl-pk-Mm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="131"/>
+        </scene>
         <!--Products Table View Controller-->
         <scene sceneID="e17-5Q-odD">
             <objects>
@@ -84,12 +116,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="pIx-EI-acD" kind="relationship" relationship="rootViewController" id="LWp-gV-hnC"/>
+                        <segue destination="FQD-Xf-eZO" kind="relationship" relationship="rootViewController" id="Jqt-1c-oVS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fql-hk-va1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="167" y="131"/>
+            <point key="canvasLocation" x="-649" y="131"/>
         </scene>
         <!--Detailed Product View Controller-->
         <scene sceneID="wQH-uc-UDR">
