@@ -19,8 +19,21 @@ class ProductsTableViewController: UITableViewController {
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
     var products: Array = [ProductModel]() //data copied from Core Data
-    var productSelected: ProductModel? = nil
-    var categorySelected: String? = ""
+    var productSelected: ProductModel?
+    var categorySelected: Category? {
+        didSet {
+            if (self.categorySelected!.name == "skincare") {
+                title = "Skin Care Products"
+            } else {
+                title = "Supplements"
+            }
+            
+            loadProductsFromCoreData()
+
+        }
+        
+    }
+    
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var productDataArray: Array = [ProductData]()
@@ -29,13 +42,7 @@ class ProductsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (self.categorySelected! == "skincare") {
-            title = "Skin Care Products"
-        } else {
-            title = "Supplements"
-        }
-        
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 
         getProductDataFrom(url: PRODUCT_URL, parameters: params)
         
@@ -56,7 +63,7 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - JSON Parsing
     func obtainProductDataByDecoding(json: JSON) {
-        let productList = json[self.categorySelected!]
+        let productList = json[self.categorySelected!.name!]
         
         self.deleteProductsFromCoreData()
         productDataArray.removeAll()
@@ -70,6 +77,8 @@ class ProductsTableViewController: UITableViewController {
             productData.price = product.1["price"].stringValue
             productData.unit = product.1["unit"].stringValue
             productData.weight = product.1["weight"].stringValue
+            productData.parentCategory = self.categorySelected
+            
             productDataArray.append(productData)
         }
         
@@ -93,7 +102,7 @@ class ProductsTableViewController: UITableViewController {
         let indicator = cell.accessoryView as! UIActivityIndicatorView
         
         let myView = UIView()
-        if (self.categorySelected! == "skincare") {
+        if (self.categorySelected!.name == "skincare") {
             if (indexPath.row % 2 == 0) {
                 myView.backgroundColor = UIColor(red: 0.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
             } else {
@@ -266,7 +275,16 @@ class ProductsTableViewController: UITableViewController {
         }
     }
     
-    func loadProductsFromCoreData(with request: NSFetchRequest<ProductData> = ProductData.fetchRequest()) {
+    func loadProductsFromCoreData(with request: NSFetchRequest<ProductData> = ProductData.fetchRequest(), predicate: NSPredicate? = nil) {
+        
+        print(categorySelected!.name!)
+        let categoryPredicate = NSPredicate(format: "parentCategory.name CONTAINS[cd] %@", categorySelected!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
         
         do {
            productDataArray = try context.fetch(request)

@@ -18,13 +18,14 @@ class CategoryViewController: UITableViewController {
     let params : [String : String] = ["userId" : "userId", "password" : "password"]
     
     var categories: Array = [Category]()
-    var categorySelected: String = ""
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let request: NSFetchRequest<Category> = Category.fetchRequest()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "List of Categories"
+        
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
         getCategoriesFrom(url: PRODUCT_URL, parameters: params)
 
@@ -74,10 +75,18 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - TableView Delegate
+    // MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categorySelected = categories[indexPath.row].name!
         performSegue(withIdentifier: "ShowProductsTableVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let productsTableVC = segue.destination as! ProductsTableViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            productsTableVC.categorySelected = categories[indexPath.row]
+        }
+        
     }
     
     // MARK: - Data Manipulation Methods
@@ -115,17 +124,6 @@ class CategoryViewController: UITableViewController {
             }
         }
         self.saveCategoriesToCoreData()
-
-    }
-
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "ShowProductsTableVC") {
-            if let productsTableVC = segue.destination as? ProductsTableViewController {
-                productsTableVC.categorySelected = self.categorySelected
-            }
-        }
-        
     }
 
 }
