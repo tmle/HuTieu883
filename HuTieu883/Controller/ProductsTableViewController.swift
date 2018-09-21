@@ -34,7 +34,6 @@ class ProductsTableViewController: UITableViewController {
         
     }
     
-    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var productDataArray: Array = [ProductData]()
     let request: NSFetchRequest<ProductData> = ProductData.fetchRequest()
@@ -50,6 +49,7 @@ class ProductsTableViewController: UITableViewController {
     
     // MARK: - Networking
     func getProductDataFrom(url: String, parameters: [String: String]) {
+        
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             if response.result.isSuccess {
@@ -104,15 +104,15 @@ class ProductsTableViewController: UITableViewController {
         let myView = UIView()
         if (self.categorySelected!.name == "skincare") {
             if (indexPath.row % 2 == 0) {
-                myView.backgroundColor = UIColor(red: 0.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
+                myView.backgroundColor = .darkAquaColor
             } else {
-                myView.backgroundColor = UIColor(red: 0.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+                myView.backgroundColor = .lightAquaColor
             }
         } else {
             if (indexPath.row % 2 == 0) {
-                myView.backgroundColor = UIColor(red: 120.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
+                myView.backgroundColor = .darkDustyRoseColor
             } else {
-                myView.backgroundColor = UIColor(red: 150.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+                myView.backgroundColor = .lightDustyRoseColor
             }
             
         }
@@ -133,10 +133,10 @@ class ProductsTableViewController: UITableViewController {
         case .downloaded:
             indicator.stopAnimating()
             cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
-            cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.textLabel!.textColor = .darkBlueColor
             cell.textLabel?.text = prod.name
             cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
-            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.detailTextLabel!.textColor = .lightPurpleColor
             cell.detailTextLabel?.text = prod.brief
             cell.imageView?.image = prod.thumbnail
 
@@ -144,10 +144,10 @@ class ProductsTableViewController: UITableViewController {
             indicator.startAnimating()
             cell.imageView?.image = UIImage(named: "camera-48x48.png")
             cell.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
-            cell.textLabel!.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.textLabel!.textColor = .darkBlueColor
             cell.textLabel?.text = "downloading ... "
             cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15.0)
-            cell.detailTextLabel!.textColor = UIColor(red: 0.5, green: 0.004, blue: 0.502, alpha: 1.0)
+            cell.detailTextLabel!.textColor = .lightPurpleColor
             cell.detailTextLabel?.text = "..."
             
             if (!tableView.isDragging && !tableView.isDecelerating) {
@@ -362,4 +362,17 @@ extension ProductsTableViewController : UISearchBarDelegate {
         }
     }
     
+}
+
+extension UIColor {
+    static let darkAquaColor = UIColor.rgb(r: 0, g: 204, b: 204)
+    static let lightAquaColor = UIColor.rgb(r: 0, g: 230, b: 230)
+    static let darkDustyRoseColor = UIColor.rgb(r: 255, g: 204, b: 204)
+    static let lightDustyRoseColor = UIColor.rgb(r: 255, g: 230, b: 230)
+    static let darkBlueColor = UIColor.rgb(r: 0, g: 1, b: 128)
+    static let lightPurpleColor = UIColor.rgb(r: 128, g: 1, b: 128)
+    
+    static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
+        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
+    }
 }

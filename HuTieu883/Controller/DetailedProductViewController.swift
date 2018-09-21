@@ -24,10 +24,10 @@ class DetailedProductViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.nameLabel.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+        self.nameLabel.textColor = .darkBlueColor
         self.nameLabel.text = productSelected?.name
         
-        self.descTextView.textColor = UIColor(red: 0.0, green: 0.004, blue: 0.502, alpha: 1.0)
+        self.descTextView.textColor = .darkBlueColor
         self.descTextView.text = productSelected?.desc
         self.thumbnailImageView.image = productSelected?.thumbnail
         
@@ -37,15 +37,5 @@ class DetailedProductViewController: UIViewController {
         self.weightLabel.text = productSelected?.weight
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
