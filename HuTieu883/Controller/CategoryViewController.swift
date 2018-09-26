@@ -11,7 +11,6 @@ import Alamofire
 import SwiftyJSON
 import CoreData
 
-//@available(iOS 10.0, *)
 class CategoryViewController: UITableViewController {
     
     let PRODUCT_URL = "https://www.thinhmle.com/api/ProductList_skintree.json"
@@ -25,7 +24,7 @@ class CategoryViewController: UITableViewController {
         super.viewDidLoad()
         title = "List of Categories"
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
         getCategoriesFrom(url: PRODUCT_URL, parameters: params)
 

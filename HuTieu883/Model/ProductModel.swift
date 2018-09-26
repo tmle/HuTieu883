@@ -46,30 +46,23 @@ class PendingOperations {
 }
 
 class ImageDownloader: Operation {
-    //1
     let productModel: ProductModel
     
-    //2
     init(productModel: ProductModel) {
         self.productModel = productModel
     }
     
-    //3
     override func main() {
-        //4
         if self.isCancelled {
             return
         }
-        //5
         let currentUrl = URL(string: productModel.thumbnailURL)!
         let imageData = try? Data(contentsOf: currentUrl)
         
-        //6
         if self.isCancelled {
             return
         }
         
-        //7
         if imageData != nil {
             self.productModel.thumbnail = UIImage(data:imageData!)
             self.productModel.state = .downloaded
